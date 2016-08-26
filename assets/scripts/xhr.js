@@ -19,11 +19,11 @@ $(() => {
     console.log('Signed in');
   };
 
-  const signUpOrIn = (credentials, path, onFulilled, onRejected) => {
+  const signUpOrIn = (credentials, path, onFulfilled, onRejected) => {
     let xhr = new XMLHttpRequest();
     xhr.addEventListener('load', () => {
       if (xhr.status >= 200 && xhr.status < 300) {
-        onFulilled(xhr.response);
+        onFulfilled(xhr.response);
       } else {
         onRejected(xhr);
       }
@@ -34,11 +34,11 @@ $(() => {
     xhr.send(JSON.stringify(credentials));
   };
 
-  const signIn = (credentials, onFulilled, onRejected) =>
-    signUpOrIn(credentials, '/sign-in', onFulilled, onRejected);
+  const signIn = (credentials, onFulfilled, onRejected) =>
+    signUpOrIn(credentials, '/sign-in', onFulfilled, onRejected);
 
-  const signUp = (credentials, onFulilled, onRejected) =>
-    signUpOrIn(credentials, '/sign-up', onFulilled, onRejected);
+  const signUp = (credentials, onFulfilled, onRejected) =>
+    signUpOrIn(credentials, '/sign-up', onFulfilled, onRejected);
 
   $('#sign-up').on('submit', function submitHandler(e) {
     e.preventDefault(); // prevet default submit action
