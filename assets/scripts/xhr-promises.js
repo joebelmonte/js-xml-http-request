@@ -1,5 +1,7 @@
 'use strict';
 
+const getFormFields = require('../../lib/get-form-fields');
+
 $(() => {
   // // console methods require `this` to be `console`
   // // promise function are called with `this === undefined`
@@ -34,7 +36,8 @@ $(() => {
       });
       xhr.addEventListener('error', () => reject(xhr));
       xhr.open('POST', baseUrl + path);
-      xhr.send(credentials);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify(credentials));
     });
 
   const signIn = (credentials) => signUpOrIn(credentials, '/sign-in');
@@ -47,7 +50,7 @@ $(() => {
     // let clog = console.log.bind(console);
     // let elog = console.error.bind(console);
     e.preventDefault();
-    let formData = new FormData(this);
+    let formData = getFormFields(this);
     signUp(formData)
     .then(onSignUp)
     .then(() => signIn(formData))

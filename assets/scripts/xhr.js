@@ -1,5 +1,7 @@
 'use strict';
 
+const getFormFields = require('../../lib/get-form-fields');
+
 $(() => {
   const baseUrl = 'http://localhost:3000';
 
@@ -28,7 +30,8 @@ $(() => {
     });
     xhr.addEventListener('error', () => onRejected(xhr));
     xhr.open('POST', baseUrl + path);
-    xhr.send(credentials);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(credentials));
   };
 
   const signIn = (credentials, onFulilled, onRejected) =>
@@ -38,8 +41,9 @@ $(() => {
     signUpOrIn(credentials, '/sign-up', onFulilled, onRejected);
 
   $('#sign-up').on('submit', function submitHandler(e) {
-    e.preventDefault();
-    let formData = new FormData(this);
+    e.preventDefault(); // prevet default submit action
+    let formData = getFormFields(this); // get data from form
+
     const onSignUpSuccess = function (response) {
       onSignUp(response);
       signIn(formData, onSignIn, onError);
