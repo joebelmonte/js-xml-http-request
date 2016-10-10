@@ -1,12 +1,14 @@
 'use strict';
 
+const getFormFields = require('../../lib/get-form-fields');
+
 $(() => {
   // // console methods require `this` to be `console`
   // // promise function are called with `this === undefined`
   // let clog = console.log.bind(console);
   // let elog = console.error.bind(console);
 
-  const baseUrl = 'http://localhost:3000/';
+  const baseUrl = 'http://localhost:3000';
 
   const onError = (error) => {
     console.error(error);
@@ -34,24 +36,27 @@ $(() => {
       });
       xhr.addEventListener('error', () => reject(xhr));
       xhr.open('POST', baseUrl + path);
-      xhr.send(credentials);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify(credentials));
     });
 
   const signIn = (credentials) => signUpOrIn(credentials, '/sign-in');
 
   const signUp = (credentials) => signUpOrIn(credentials, '/sign-up');
 
-  $('#sign-up-promise').on('submit', function submitHandler(e) {
+  const submitHandler = function (event) {
     // // console methods require `this` to be `console`
     // // promise function are called with `this === undefined`
     // let clog = console.log.bind(console);
     // let elog = console.error.bind(console);
-    e.preventDefault();
-    let formData = new FormData(this);
-    signUp(formData)
+    event.preventDefault();
+    let data = getFormFields(event.target);
+    signUp(data)
     .then(onSignUp)
-    .then(() => signIn(formData))
+    .then(() => signIn(data)) // 👀 here
     .then(onSignIn)
     .catch(onError);
-  });
+  };
+
+  $('#sign-up-promise').on('submit', submitHandler);
 });
