@@ -2,11 +2,12 @@
 
 # JavaScript XML HTTP Requests
 
-JavaScript XML HTTP Requests (xhr) are provided by browsers for performing
-asynchoronous network operations (a.k.a. AJAX in jQuery). In jQuery, `$.ajax`
-returns something called a "deferred object" that behaves a lot like a promise.
-In this training, we create our Promise interface for xhr using native promises
-and native xhr.
+JavaScript XML HTTP Requests (xhr), created using the `XMLHttpRequest`
+constructor function, are part of the Web API provided by browsers.  These
+objects perform asynchronous network operations (a.k.a. AJAX in jQuery). In
+jQuery, `$.ajax` returns something called a "deferred object" that implements
+the [Promises/A+](https://promisesaplus.com/) specification.. In this talk,
+we'll create a Promise interface for xhr using native promises and native xhr.
 
 ## Prerequisites
 
@@ -17,7 +18,7 @@ and native xhr.
 
 By the end of this, developers should be able to:
 
--   Compare Promises with jQuery Deferred objects.
+-   Organize solutions to evented APIs using callbacks and promises.
 
 ## Preparation
 
